@@ -2,33 +2,34 @@
 const CACHE_VERSION = 'v1.0.4'; 
 const CACHE_NAME = `meu-site-cache-${CACHE_VERSION}`;
 const urlsToCache = [
-    './',
-    './index.html',
-    './notas/icon-192x192.png',
-    './notas/icon-512x512.png',
-    './notas/style.css',
-    './notas/script.js',
+    '/note/', // Página inicial
+    '/note/index.html',
+    '/note/notas/icon-192x192.png',
+    '/note/notas/icon-512x512.png',
+    '/note/notas/style.css',
+    '/note/notas/script.js',
 
-    './outros/bootstrap.bundle.min.js',
-    './outros/bootstrap.min.css',
-    './outros/manifest.json',
-    './outros/crypto-js.min.js',
+    '/note/outros/bootstrap.bundle.min.js',
+    '/note/outros/bootstrap.min.css',
+    '/note/outros/manifest.json',
+    '/note/outros/crypto-js.min.js',
 
-    './formatar/formatar.html',
-    './formatar/formatar.css',
-    './formatar/formatar.js',
-    './formatar/f-192x192.png',
+    '/note/formatar/formatar.html',
+    '/note/formatar/formatar.css',
+    '/note/formatar/formatar.js',
+    '/note/formatar/f-192x192.png',
 
-    './quiz/quiz.html',
-    './quiz/quiz.css',
-    './quiz/quiz.js',
-    './quiz/acertou.mp3',
-    './quiz/conclusao.mp3',
-    './quiz/errou.mp3',
-    './quiz/fracasso.mp3',
-    './quiz/timeout.mp3',
-    './quiz/q-192x192.png'
+    '/note/quiz/quiz.html',
+    '/note/quiz/quiz.css',
+    '/note/quiz/quiz.js',
+    '/note/quiz/acertou.mp3',
+    '/note/quiz/conclusao.mp3',
+    '/note/quiz/errou.mp3',
+    '/note/quiz/fracasso.mp3',
+    '/note/quiz/timeout.mp3',
+    '/note/quiz/q-192x192.png'
 ];
+
 
 // Instala e cacheia os arquivos
 self.addEventListener('install', (event) => {
