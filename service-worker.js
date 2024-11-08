@@ -2,32 +2,32 @@
 const CACHE_VERSION = 'v1.0.4'; 
 const CACHE_NAME = `meu-site-cache-${CACHE_VERSION}`;
 const urlsToCache = [
-    '/note/', // Página inicial
-    '/note/index.html',
-    '/note/notas/icon-192x192.png',
-    '/note/notas/icon-512x512.png',
-    '/note/notas/style.css',
-    '/note/notas/script.js',
+    '/nota/', // Página inicial
+    '/nota/index.html',
+    '/nota/notas/icon-192x192.png',
+    '/nota/notas/icon-512x512.png',
+    '/nota/notas/style.css',
+    '/nota/notas/script.js',
 
-    '/note/outros/bootstrap.bundle.min.js',
-    '/note/outros/bootstrap.min.css',
-    '/note/outros/manifest.json',
-    '/note/outros/crypto-js.min.js',
+    '/nota/outros/bootstrap.bundle.min.js',
+    '/nota/outros/bootstrap.min.css',
+    '/nota/outros/manifest.json',
+    '/nota/outros/crypto-js.min.js',
 
-    '/note/formatar/formatar.html',
-    '/note/formatar/formatar.css',
-    '/note/formatar/formatar.js',
-    '/note/formatar/f-192x192.png',
+    '/nota/formatar/formatar.html',
+    '/nota/formatar/formatar.css',
+    '/nota/formatar/formatar.js',
+    '/nota/formatar/f-192x192.png',
 
-    '/note/quiz/quiz.html',
-    '/note/quiz/quiz.css',
-    '/note/quiz/quiz.js',
-    '/note/quiz/acertou.mp3',
-    '/note/quiz/conclusao.mp3',
-    '/note/quiz/errou.mp3',
-    '/note/quiz/fracasso.mp3',
-    '/note/quiz/timeout.mp3',
-    '/note/quiz/q-192x192.png'
+    '/nota/quiz/quiz.html',
+    '/nota//quiz/quiz.css',
+    '/nota/quiz/quiz.js',
+    '/nota/quiz/acertou.mp3',
+    '/nota/quiz/conclusao.mp3',
+    '/nota/quiz/errou.mp3',
+    '/nota/quiz/fracasso.mp3',
+    '/nota/quiz/timeout.mp3',
+    '/nota/quiz/q-192x192.png'
 ];
 
 
