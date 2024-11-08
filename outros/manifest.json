@@ -2,7 +2,7 @@
     "name": "Note Quiz",
     "short_name": "NoteQ",
     "description": "Um app PWA para notas e jogar",
-    "start_url": "/note/index.html",  // Ajuste aqui para o subdiretório correto
+    "start_url": "/note/index.html",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#007bff",
