@@ -1,5 +1,5 @@
 // Versão do cache e nome dinâmico
-const CACHE_VERSION = 'v1.0.3'; 
+const CACHE_VERSION = 'v1.0.3';  // Atualize esta versão
 const CACHE_NAME = `meu-site-cache-${CACHE_VERSION}`;
 const urlsToCache = [
     '/nota/', // Página inicial
@@ -20,7 +20,7 @@ const urlsToCache = [
     '/nota/formatar/f-192x192.png',
 
     '/nota/quiz/quiz.html',
-    '/nota//quiz/quiz.css',
+    '/nota/quiz/quiz.css',
     '/nota/quiz/quiz.js',
     '/nota/quiz/acertou.mp3',
     '/nota/quiz/conclusao.mp3',
@@ -30,9 +30,10 @@ const urlsToCache = [
     '/nota/quiz/q-192x192.png'
 ];
 
-
 // Instala e cacheia os arquivos
 self.addEventListener('install', (event) => {
+    console.log('Instalando Service Worker...');
+
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then((cache) => {
@@ -54,20 +55,20 @@ self.addEventListener('install', (event) => {
                     })
                 );
             })
-            .then(() => self.skipWaiting())
+            .then(() => self.skipWaiting())  // Força o SW a se tornar ativo imediatamente
             .catch((error) => console.error('Erro ao tentar abrir cache:', error))
     );
 });
 
-
-
 // Ativa o Service Worker e limpa caches antigos
 self.addEventListener('activate', (event) => {
+    console.log('Ativando Service Worker...');
     event.waitUntil(
         caches.keys().then((cacheNames) =>
             Promise.all(
                 cacheNames.map((cacheName) => {
                     if (cacheName !== CACHE_NAME) {
+                        console.log(`Cache antigo excluído: ${cacheName}`);
                         return caches.delete(cacheName);
                     }
                 })
@@ -81,57 +82,48 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
     const requestUrl = new URL(event.request.url);
 
-    // Ignora requisições que não sejam GET (exemplo: POST, PUT, DELETE)
     if (event.request.method !== 'GET') {
         return;
     }
 
-    // Se a requisição for para o Gist (ou outros sites específicos), busque diretamente da rede
     if (requestUrl.hostname.includes('gist.githubusercontent.com')) {
         event.respondWith(fetch(event.request));
         return;
     }
 
-    // Verifica se o recurso está no cache primeiro
     event.respondWith(
         caches.match(event.request)
             .then((cachedResponse) => {
-                // Se encontrado no cache, retorna a resposta cacheada
                 if (cachedResponse) {
+                    console.log(`Recurso encontrado no cache: ${event.request.url}`);
                     return cachedResponse;
                 }
 
-                // Caso não tenha no cache, tenta buscar na rede
-                if (event.request.url.startsWith('http')) {
-                    return fetch(event.request)
-                        .then((networkResponse) => {
-                            // Se a resposta for bem-sucedida, cacheia o novo recurso
-                            if (networkResponse && networkResponse.status === 200) {
-                                const responseClone = networkResponse.clone();
+                return fetch(event.request)
+                    .then((networkResponse) => {
+                        if (networkResponse && networkResponse.status === 200) {
+                            const responseClone = networkResponse.clone();
+                            caches.open(CACHE_NAME)
+                                .then((cache) => {
+                                    cache.put(event.request, responseClone);
+                                })
+                                .catch((error) => console.warn('Falha ao salvar no cache:', error));
 
-                                caches.open(CACHE_NAME).then((cache) => {
-                                    cache.put(event.request, responseClone).catch((error) => {
-                                        console.warn('Falha ao salvar no cache:', error);
-                                    });
-                                });
-                            }
-                            return networkResponse || new Response('Falha na resposta da rede', {
-                                status: 500,
-                                statusText: 'Erro na rede',
-                            }); // Caso o fetch falhe, cria uma resposta de erro
-                        })
-                        .catch((error) => {
-                            // Se a rede falhar, retorna uma resposta alternativa (offline)
-                            console.error('Erro ao buscar recurso:', error);
-                            return caches.match('/offline.html') || new Response('Página não encontrada', {
-                                status: 404,
-                                statusText: 'Página não encontrada',
-                            }); // Garantir que sempre retornará uma resposta válida
+                            return networkResponse;
+                        }
+
+                        return networkResponse || new Response('Falha na resposta da rede', {
+                            status: 500,
+                            statusText: 'Erro na rede',
                         });
-                }
-
-                // Caso o recurso não seja HTTP (exemplo: requisições para recursos locais)
-                return fetch(event.request);
+                    })
+                    .catch((error) => {
+                        console.error('Erro ao buscar recurso:', error);
+                        return caches.match('/offline.html') || new Response('Página não encontrada', {
+                            status: 404,
+                            statusText: 'Página não encontrada',
+                        });
+                    });
             })
     );
 });
