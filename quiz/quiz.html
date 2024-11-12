@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz</title>
+    <title>NoteQ</title>
     <link rel="stylesheet" href="quiz.css"> <!-- Seu CSS personalizado -->
     <link rel="stylesheet" href="../outros/bootstrap.min.css"> <!-- Inclua o Bootstrap -->
     <script src="../outros/bootstrap.bundle.min.js"></script> <!-- Inclua o JS do Bootstrap -->
@@ -51,7 +51,7 @@
         </div> -->
 
 
-        <button id="toggleButton" class="btn btn-primary w-100 w-lg-auto p-3 mt-0 mb-4">Criar Novas Perguntas</button>
+        <button id="toggleButton" class="btn btn-primary w-100 w-lg-auto p-3 mt-0 mb-4 mx-auto d-block">Criar Novas Perguntas</button>
 
         <div class="secPerguntas" id="secPerguntas" style="display: none;">
             <div class="col-12 d-flex justify-content-center align-items-center mb-3">
@@ -145,11 +145,32 @@
             <!-- Botão para selecionar arquivo -->
             <button accesskey="a" title="ALT+A Importar Arquivo" id="uploadButton" class="btn btn-primary"
                 onclick="document.getElementById('fileInput').click();">Importar Localmente</button>
-            <button class="btn btn-secondary" onclick="importDatabaseFromGist()">Importar da Nuvem</button>
             <button accesskey="d" title="ALT+D Exportar Arquivo" class="btn btn-secondary"
                 onclick="exportDatabase()">Exportar Localmente</button>
             <button class="btn btn-danger" onclick="deleteAllQuestions()">Excluir Todas as Perguntas</button>
         </div>
+
+        <!-- funçao para selecionar a categoria que deseja baixar -->
+            <div>
+                <h1 style="text-align: center;">Importar uma Categoria</h1>
+                
+                <div class="container">
+                    <!-- Dropdown (select) para escolher a categoria -->
+                    <select style="text-align: center;" id="categorySelect">
+                        <option value="">baixar categoria</option>
+                        <option value="91b30f2ab4db553ac595d17e69c8a095">HTML Básico</option>
+                        <option value="c2f9a6bb7efa62f99ca573068a94c968">CSS Básico</option>
+                        <option value="4de8efe49e6ee9e9e425c7e7f040d1ac">JS Básico</option>
+                        <!-- Adicione mais categorias conforme necessário -->
+                    </select>
+                
+                    <!-- Botão para importar os dados do Gist -->
+                    <button id="importButton">Importar</button>
+                </div>
+                
+
+                <div style="text-align: center;" id="statusMessage"></div> <!-- Mensagem de status -->
+            </div>
 
         <!-- Input de arquivo escondido -->
         <input type="file" id="fileInput" style="display: none;" onchange="importDatabase(event)" accept=".json">
@@ -168,7 +189,7 @@
             <label for="categoria-select" class="dropAddPerguntas">
                 <H4>Selecione uma categoria:</H4>
             </label>
-            <select id="categoria-select" class="dropAddPerguntas" onchange="filterQuestionsByCategory()">
+            <select style="text-align: center;" id="categoria-select" class="dropAddPerguntas" onchange="filterQuestionsByCategory()">
                 <option value="">Todas as Categorias</option>
                 <!-- As opções de categorias serão preenchidas dinamicamente -->
             </select>
@@ -183,11 +204,11 @@
         <div class="container">
             <div class="row justify-content-center">
                 <!-- Bloco 1 (Categoria primeiro) -->
-                <div class="col-12 col-md-6">
+                <div class="col-12">
                     <div class="d-flex justify-content-start align-items-center w-100">
                         <label style="font-size: x-large; font-weight: bold;" for="categoria-quiz"
                             class="form-label me-2 mb-0">Categoria:</label>
-                        <select id="categoria-quiz" class="form-select w-100">
+                        <select style="text-align: center;" id="categoria-quiz" class="form-select w-100">
                             <option value="">Todas</option>
                             <!-- As opções de categorias serão preenchidas dinamicamente -->
                         </select>
@@ -196,6 +217,7 @@
 
             </div>
         </div>
+        
         <div id="quiz" style="display: none;">
             <div id="timer" class="mt-1 col-12 d-flex flex-column flex-md-row align-items-center justify-content-center"
                 style="font-size: 18px; color: #ff0000fe;"></div>
